@@ -2,14 +2,17 @@ import { promises as fs } from "fs";
 import path from "path";
 import Image from "next/image";
 import Link from "next/link";
-import Dropdown from "./../../../components/Drowdown";
 import { Photographer } from "../../types/photographer";
+import { Media } from "../../types/media";
 import PhotographerGallery from "./../../../components/PhotographerGallery";
+import ContactModalWrapper from "./../../../components/ContactModalWrapper";
 
-type Props = { params: { id: string } };
+type Props = { params: Promise<{ id: string }> };
 
 export default async function PhotographerPage({ params }: Props) {
-  const id = parseInt(params.id, 10);
+  // ✅ On attend params avant de l’utiliser
+  const resolvedParams = await params;
+  const id = parseInt(resolvedParams.id, 10);
 
   // --- Récupération des photographes ---
   const photographerPath = path.join(
@@ -30,14 +33,20 @@ export default async function PhotographerPage({ params }: Props) {
   // --- Récupération des médias ---
   const mediaPath = path.join(process.cwd(), "src", "data", "media.json");
   const mediaData = await fs.readFile(mediaPath, "utf-8");
-  const allMedias = JSON.parse(mediaData);
+  const allMedias: Media[] = JSON.parse(mediaData);
 
-  // ✅ Filtre les médias qui appartiennent à ce photographe
-  const medias = allMedias.filter((m: any) => m.photographerId === id);
+  const medias: Media[] = allMedias.filter(
+    (m: Media) => m.photographerId === id
+  );
+
+  // --- Calcul du total des likes ---
+  const totalLikes: number = medias.reduce(
+    (sum: number, m: Media) => sum + m.likes,
+    0
+  );
 
   return (
     <main className="max-w-6xl mx-auto p-4">
-      {/* --- Header avec logo --- */}
       <header className="flex items-center justify-between py-4 mb-8">
         <Link href="/">
           <Image
@@ -50,9 +59,7 @@ export default async function PhotographerPage({ params }: Props) {
         </Link>
       </header>
 
-      {/* --- Infos du photographe --- */}
       <section className="flex flex-col md:flex-row items-center justify-between bg-[#FAFAFA] p-6 rounded-lg mb-8 h-[230px] md:h-auto">
-        {/* Texte du photographe */}
         <div className="text-center md:text-left">
           <h1 className="text-5xl text-[var(--color-title)]">
             {photographer.name}
@@ -63,18 +70,8 @@ export default async function PhotographerPage({ params }: Props) {
           <p className="mt-4 text-gray-600">{photographer.tagline}</p>
         </div>
 
-        {/* Bouton Contact */}
-        <button className="my-6 md:my-0 md:mx-8">
-          <Image
-            src="/icons/contact.png"
-            alt="Contactez-moi"
-            width={160}
-            height={48}
-            className="object-contain"
-          />
-        </button>
+        <ContactModalWrapper photographerName={photographer.name} />
 
-        {/* Portrait */}
         <div className="relative w-36 h-36">
           <Image
             src={`/images/${photographer.portrait}`}
@@ -86,7 +83,11 @@ export default async function PhotographerPage({ params }: Props) {
         </div>
       </section>
 
-      <PhotographerGallery medias={medias} />
+      <PhotographerGallery
+        medias={medias}
+        pricePerDay={photographer.price}
+        totalLikes={totalLikes}
+      />
     </main>
   );
 }
