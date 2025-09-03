@@ -1,4 +1,5 @@
-# P9_Fisheye - ![Logo Fisheye](/logo.png) Plateforme de photographes
+# P9_Fisheye - ![Logo Fisheye](https://github.com/hNnicolas/P9_FishEye/blob/main/frontend/public/logo.png)
+ Plateforme de photographes
 
 Fisheye est une plateforme web permettant de découvrir des photographes et leurs œuvres, avec une expérience utilisateur riche incluant tri, likes et modales interactives.
 
