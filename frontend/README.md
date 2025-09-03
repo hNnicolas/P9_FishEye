@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# P9_Fisheye - ![Logo Fisheye](/logo.png) Plateforme de photographes
 
-## Getting Started
+Fisheye est une plateforme web permettant de découvrir des photographes et leurs œuvres, avec une expérience utilisateur riche incluant tri, likes et modales interactives.
 
-First, run the development server:
+---
 
+## Fonctionnalités
+
+### Page d’accueil
+- Liste des photographes avec leurs informations principales (nom, ville, pays, tagline, prix).
+- Possibilité de naviguer vers la page détaillée d’un photographe.
+- Tri et filtrage des photographes selon différents critères.  
+
+![Homepage](public/screenshot/homepage.png)
+
+---
+
+### Page photographe
+- Affichage de tous les médias (photos et vidéos) du photographe.
+- Tri des médias par **Popularité**, **Date** ou **Titre** grâce au composant `Dropdown`.
+- Incrémentation dynamique des **likes** pour chaque média, avec mise à jour du total visible dans l’encart en bas de page.
+- Modal carousel pour visualiser les médias en grand format avec navigation flèches et gestion des likes.
+
+![Photographer Page](public/screenshot/photographer_page.png)  
+
+---
+
+### Modal contact
+- Ouverture d’une modal pour contacter le photographe.
+- Gestion de l’accessibilité et fermeture via bouton ou clic en dehors.
+- Changement visuel du bouton au hover et focus.
+
+![Contact Modal](public/screenshot/contact-modal.png)
+
+---
+
+### Modal galerie
+- Visualisation en plein écran des médias du photographe.
+- Navigation entre les médias avec flèches gauche/droite.
+- Gestion des likes directement depuis la modal.
+- Fermeture avec la croix ou la touche `Escape`.
+
+![Gallery Modal](public/screenshot/galery-modal.png)
+
+---
+
+## Technologies utilisées
+
+- **Frontend :** Next.js, React, TypeScript
+- **Styling :** TailwindCSS
+- **Backend :** Prisma + SQLite
+- **Autres :** Fetch API, gestion des routes API pour incrémentation des likes
+
+---
+
+## Installation
+
+1. Cloner le projet :
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+git clone <https://github.com/hNnicolas/P9_FishEye/tree/main/frontend>
+cd frontend
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
