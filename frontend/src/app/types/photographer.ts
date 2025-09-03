@@ -7,3 +7,13 @@ export type Photographer = {
   price: number;
   portrait: string;
 };
+
+export type Photo = {
+  id: number;
+  url: string;
+  title?: string;
+};
+
+export type PhotographerWithPhotos = Photographer & {
+  photos: Photo[];
+};
