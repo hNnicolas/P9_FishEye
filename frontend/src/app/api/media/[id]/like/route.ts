@@ -3,9 +3,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: Record<string, string> }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const mediaId = Number(params.id);
+  const { id } = await params;
+  const mediaId = Number(id);
 
   if (isNaN(mediaId)) {
     return NextResponse.json(

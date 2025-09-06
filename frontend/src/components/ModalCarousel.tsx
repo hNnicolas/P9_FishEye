@@ -11,16 +11,18 @@ type Media = {
 };
 
 type Props = {
-  medias: Media[];
+  medias: Media[]; // médias triés pour l'affichage dans la modale
+  originalMedias: Media[]; // médias originaux pour gérer correctement les likes
   currentIndex: number;
   onClose: () => void;
   setCurrentIndex: (index: number) => void;
   likesState: number[];
-  handleLike: (index: number) => void;
+  handleLike: (mediaId: number) => void;
 };
 
 export default function ModalCarousel({
   medias,
+  originalMedias,
   currentIndex,
   onClose,
   setCurrentIndex,
@@ -117,11 +119,16 @@ export default function ModalCarousel({
 
           <button
             className="flex items-center gap-1 cursor-pointer"
-            onClick={() => handleLike(currentIndex)}
+            onClick={() => handleLike(media.id)}
           >
             <span className="text-[var(--color-primary)] text-lg">
-              {likesState[currentIndex]}
+              {
+                likesState[
+                  originalMedias.findIndex((m: Media) => m.id === media.id)
+                ]
+              }
             </span>
+
             <Image src="/icons/likes.png" alt="like" width={20} height={20} />
           </button>
         </div>

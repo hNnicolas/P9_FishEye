@@ -1,48 +1,36 @@
-import { promises as fs } from "fs";
-import path from "path";
+import { prisma } from "@/lib/prisma-db";
 import Image from "next/image";
 import Link from "next/link";
-import { Photographer } from "../../types/photographer";
 import { Media } from "../../types/media";
 import PhotographerGallery from "./../../../components/PhotographerGallery";
 import ContactModalWrapper from "./../../../components/ContactModalWrapper";
 
 type Props = { params: Promise<{ id: string }> };
 
-export default async function PhotographerPage({ params }: Props) {
+export default async function PhotographerPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const resolvedParams = await params;
   const id = parseInt(resolvedParams.id, 10);
 
-  // --- Récupération des photographes ---
-  const photographerPath = path.join(
-    process.cwd(),
-
-    "data",
-    "photographer.json"
-  );
-  const photographersData = await fs.readFile(photographerPath, "utf-8");
-  const photographers: Photographer[] = JSON.parse(photographersData);
-
-  const photographer = photographers.find((p) => p.id === id);
-
-  if (!photographer) {
+  const photographer = await prisma.photographer.findUnique({ where: { id } });
+  if (!photographer)
     return <p className="text-center mt-10">Photographer not found</p>;
-  }
 
-  // --- Récupération des médias ---
-  const mediaPath = path.join(process.cwd(), "data", "media.json");
-  const mediaData = await fs.readFile(mediaPath, "utf-8");
-  const allMedias: Media[] = JSON.parse(mediaData);
+  const medias = await prisma.media.findMany({ where: { photographerId: id } });
+  const mediasForGallery: Media[] = medias.map((m) => ({
+    id: m.id,
+    photographerId: m.photographerId,
+    title: m.title,
+    image: m.image ?? undefined,
+    video: m.video ?? undefined,
+    likes: m.likes,
+    date: m.date,
+  }));
 
-  const medias: Media[] = allMedias.filter(
-    (m: Media) => m.photographerId === id
-  );
-
-  // --- Calcul du total des likes ---
-  const totalLikes: number = medias.reduce(
-    (sum: number, m: Media) => sum + m.likes,
-    0
-  );
+  const totalLikes = medias.reduce((sum, m) => sum + m.likes, 0);
 
   return (
     <main className="max-w-6xl mx-auto p-4">
@@ -83,7 +71,7 @@ export default async function PhotographerPage({ params }: Props) {
       </section>
 
       <PhotographerGallery
-        medias={medias}
+        medias={mediasForGallery}
         pricePerDay={photographer.price}
         totalLikes={totalLikes}
       />
