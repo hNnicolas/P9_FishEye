@@ -10,14 +10,13 @@ import ContactModalWrapper from "./../../../components/ContactModalWrapper";
 type Props = { params: Promise<{ id: string }> };
 
 export default async function PhotographerPage({ params }: Props) {
-  // ✅ On attend params avant de l’utiliser
   const resolvedParams = await params;
   const id = parseInt(resolvedParams.id, 10);
 
   // --- Récupération des photographes ---
   const photographerPath = path.join(
     process.cwd(),
-    "src",
+
     "data",
     "photographer.json"
   );
@@ -31,7 +30,7 @@ export default async function PhotographerPage({ params }: Props) {
   }
 
   // --- Récupération des médias ---
-  const mediaPath = path.join(process.cwd(), "src", "data", "media.json");
+  const mediaPath = path.join(process.cwd(), "data", "media.json");
   const mediaData = await fs.readFile(mediaPath, "utf-8");
   const allMedias: Media[] = JSON.parse(mediaData);
 

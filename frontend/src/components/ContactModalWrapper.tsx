@@ -23,14 +23,14 @@ export default function ContactModalWrapper({ photographerName }: Props) {
           alt="Contactez-moi"
           width={160}
           height={48}
-          className="object-contain transition-opacity duration-200 group-hover:opacity-0 group-focus:opacity-0"
+          className="object-contain transition-opacity duration-200 group-hover:opacity-0 group-focus:opacity-0 -mt-[25px] md:mt-0"
         />
         <Image
           src="/icons/contact-hover.png"
           alt="Contactez-moi hover"
           width={160}
           height={48}
-          className="absolute top-0 left-0 object-contain opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus:opacity-100"
+          className="absolute top-0 left-0 object-contain opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus:opacity-100 -mt-[25px] md:mt-0"
         />
       </button>
 

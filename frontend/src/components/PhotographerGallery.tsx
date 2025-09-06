@@ -51,7 +51,7 @@ export default function PhotographerGallery({
     setIsModalOpen(true);
   };
 
-  const handleLike = async (index: number) => {
+  async function handleLike(index: number) {
     const media = medias[index];
 
     // Vérifie que l'id existe
@@ -67,8 +67,14 @@ export default function PhotographerGallery({
         method: "POST",
       });
 
-      // Vérifie le type de réponse
+      // Log du status et headers
+      console.log("Status API:", res.status, res.statusText);
+      console.log("Headers API:", [...res.headers]);
+
+      // Récupère la réponse brute
       const text = await res.text();
+      console.log("Réponse brute API:", text);
+
       let data;
       try {
         data = JSON.parse(text);
@@ -76,6 +82,8 @@ export default function PhotographerGallery({
         console.error("La réponse de l'API n'est pas un JSON valide:", text);
         return;
       }
+
+      console.log("Data JSON parsée:", data);
 
       if (data.success) {
         const updatedLikes = [...likesState];
@@ -90,7 +98,7 @@ export default function PhotographerGallery({
     } catch (error) {
       console.error("Erreur lors de l'incrémentation des likes", error);
     }
-  };
+  }
 
   return (
     <div className="relative">
@@ -162,7 +170,7 @@ export default function PhotographerGallery({
         />
       )}
 
-      <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 flex items-center justify-between bg-[#DB8876] text-black px-4 py-3 rounded-lg shadow-lg z-50">
+      <div className="fixed bottom-4 right-4 flex items-center justify-between bg-[#DB8876] text-black px-4 py-3 rounded-lg shadow-lg z-50">
         <div className="flex items-center gap-2">
           <span className="text-lg">{totalLikesState}</span>
           <Image src="/icons/likes.png" alt="likes" width={16} height={16} />

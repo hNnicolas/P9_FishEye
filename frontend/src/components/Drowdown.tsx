@@ -41,7 +41,7 @@ export default function Dropdown({ onSelect }: Props) {
           aria-expanded={open}
         >
           <Image
-            src="/icons/selection.png"
+            src="/icons/select.png"
             alt="Ouvrir la sélection"
             width={20}
             height={20}
