@@ -48,7 +48,7 @@ export default function ModalCarousel({
 
   return (
     <div className="fixed inset-0 bg-white bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="relative bg-white rounded-lg shadow-lg max-w-3xl w-full max-h-[90vh] flex flex-col items-center p-4">
+      <div className="relative bg-white rounded-lg shadow-lg w-full max-w-[85vw] max-h-[90vh] flex flex-col items-center p-4">
         {/* Bouton de fermeture */}
         <button
           onClick={onClose}
@@ -85,15 +85,15 @@ export default function ModalCarousel({
             <Image
               src={`/images/${media.image}`}
               alt={media.title}
-              width={800}
-              height={600}
-              className="rounded-lg object-contain"
+              width={1050}
+              height={900}
+              className="rounded-[5px] object-contain max-h-[80vh] w-auto"
             />
           ) : (
             <video
               controls
               src={`/videos/${media.video}`}
-              className="rounded-lg max-h-[70vh] w-auto"
+              className="rounded-[5px] object-contain max-h-[80vh] w-auto"
             />
           )}
 
