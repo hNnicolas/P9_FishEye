@@ -2,16 +2,12 @@ import { prisma } from "@/lib/prisma-db";
 import Image from "next/image";
 import Link from "next/link";
 import { Media } from "../../types/media";
-import PhotographerGallery from "./../../../components/PhotographerGallery";
+import PhotographerGalleryWrapper from "./../../../components/PhotographerGalleryWrapper";
 import ContactModalWrapper from "./../../../components/ContactModalWrapper";
 
 type Props = { params: Promise<{ id: string }> };
 
-export default async function PhotographerPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+export default async function PhotographerPage({ params }: Props) {
   const resolvedParams = await params;
   const id = parseInt(resolvedParams.id, 10);
 
@@ -70,7 +66,8 @@ export default async function PhotographerPage({
         </div>
       </section>
 
-      <PhotographerGallery
+      {/* 🔹 nouveau composant client */}
+      <PhotographerGalleryWrapper
         medias={mediasForGallery}
         pricePerDay={photographer.price}
         totalLikes={totalLikes}
