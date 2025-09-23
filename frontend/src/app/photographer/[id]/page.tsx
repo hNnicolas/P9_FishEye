@@ -1,9 +1,9 @@
-import { prisma } from "@/lib/prisma-db";
 import Image from "next/image";
 import Link from "next/link";
 import { Media } from "../../types/media";
 import PhotographerGalleryWrapper from "./../../../components/PhotographerGalleryWrapper";
 import ContactModalWrapper from "./../../../components/ContactModalWrapper";
+import { getPhotographer, getAllMediasForPhotographer } from "@/lib/prisma-db";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -11,11 +11,13 @@ export default async function PhotographerPage({ params }: Props) {
   const resolvedParams = await params;
   const id = parseInt(resolvedParams.id, 10);
 
-  const photographer = await prisma.photographer.findUnique({ where: { id } });
+  // utilisation de la fonction centralisée
+  const photographer = await getPhotographer(id);
   if (!photographer)
     return <p className="text-center mt-10">Photographer not found</p>;
 
-  const medias = await prisma.media.findMany({ where: { photographerId: id } });
+  // idem pour les médias
+  const medias = await getAllMediasForPhotographer(id);
   const mediasForGallery: Media[] = medias.map((m) => ({
     id: m.id,
     photographerId: m.photographerId,
@@ -66,7 +68,6 @@ export default async function PhotographerPage({ params }: Props) {
         </div>
       </section>
 
-      {/* 🔹 nouveau composant client */}
       <PhotographerGalleryWrapper
         medias={mediasForGallery}
         pricePerDay={photographer.price}

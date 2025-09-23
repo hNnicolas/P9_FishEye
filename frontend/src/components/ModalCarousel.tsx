@@ -22,12 +22,9 @@ type Props = {
 
 export default function ModalCarousel({
   medias,
-  originalMedias,
   currentIndex,
   onClose,
   setCurrentIndex,
-  likesState,
-  handleLike,
 }: Props) {
   const handleKeyDown = (e: KeyboardEvent) => {
     if (e.key === "ArrowRight") {
@@ -62,75 +59,60 @@ export default function ModalCarousel({
           />
         </button>
 
-        {/* Média */}
-        <div className="relative w-full flex items-center justify-center">
-          {/* Flèche gauche */}
-          <button
-            onClick={() =>
-              setCurrentIndex(
-                (currentIndex - 1 + medias.length) % medias.length
-              )
-            }
-            className="absolute left-[-50px] top-1/2 -translate-y-1/2 w-8 h-8 z-10"
-          >
-            <Image
-              src="/icons/arrow-left.png"
-              alt="Image précédente"
-              width={32}
-              height={32}
-            />
-          </button>
-
-          {media.image ? (
-            <Image
-              src={`/images/${media.image}`}
-              alt={media.title}
-              width={1050}
-              height={900}
-              className="rounded-[5px] object-contain max-h-[80vh] w-auto"
-            />
-          ) : (
-            <video
-              controls
-              src={`/videos/${media.video}`}
-              className="rounded-[5px] object-contain max-h-[80vh] w-auto"
-            />
-          )}
-
-          {/* Flèche droite */}
-          <button
-            onClick={() => setCurrentIndex((currentIndex + 1) % medias.length)}
-            className="absolute right-[-50px] top-1/2 -translate-y-1/2 w-8 h-8 z-10"
-          >
-            <Image
-              src="/icons/arrow-right.png"
-              alt="Image suivante"
-              width={32}
-              height={32}
-            />
-          </button>
-        </div>
-
-        {/* Titre et bouton Like */}
-        <div className="mt-4 flex flex-col items-center gap-2">
-          <p className="text-lg font-semibold text-gray-800 text-center">
-            {media.title}
-          </p>
-
-          <button
-            className="flex items-center gap-1 cursor-pointer"
-            onClick={() => handleLike(media.id)}
-          >
-            <span className="text-[var(--color-primary)] text-lg">
-              {
-                likesState[
-                  originalMedias.findIndex((m: Media) => m.id === media.id)
-                ]
+        <div className="flex flex-col items-center w-full">
+          <div className="relative inline-block">
+            {/* Flèche gauche */}
+            <button
+              onClick={() =>
+                setCurrentIndex(
+                  (currentIndex - 1 + medias.length) % medias.length
+                )
               }
-            </span>
+              className="absolute left-[-50px] top-1/2 -translate-y-1/2 w-8 h-8 z-10"
+            >
+              <Image
+                src="/icons/arrow-left.png"
+                alt="Image précédente"
+                width={32}
+                height={32}
+              />
+            </button>
 
-            <Image src="/icons/likes.png" alt="like" width={20} height={20} />
-          </button>
+            {media.image ? (
+              <Image
+                src={`/images/${media.image}`}
+                alt={media.title}
+                width={1050}
+                height={900}
+                className="rounded-[5px] object-contain max-h-[80vh] w-auto"
+              />
+            ) : (
+              <video
+                controls
+                src={`/videos/${media.video}`}
+                className="rounded-[5px] object-contain max-h-[80vh] w-auto"
+              />
+            )}
+
+            {/* Flèche droite */}
+            <button
+              onClick={() =>
+                setCurrentIndex((currentIndex + 1) % medias.length)
+              }
+              className="absolute right-[-50px] top-1/2 -translate-y-1/2 w-8 h-8 z-10"
+            >
+              <Image
+                src="/icons/arrow-right.png"
+                alt="Image suivante"
+                width={32}
+                height={32}
+              />
+            </button>
+
+            <p className="mt-2 text-lg text-[var(--color-primary)] text-left">
+              {media.title}
+            </p>
+          </div>
         </div>
       </div>
     </div>

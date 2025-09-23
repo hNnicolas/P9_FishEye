@@ -57,8 +57,8 @@ export default function PhotographerGalleryWrapper({
       <PhotographerGallery
         medias={sortedMedias}
         pricePerDay={pricePerDay}
-        totalLikes={totalLikesUpdated} // 🔹 totalLikes dynamique
-        onLike={handleLike} // 🔹 incrémente les likes
+        totalLikes={totalLikesUpdated} // totalLikes dynamique
+        onLike={handleLike} // incrémente les likes
       />
     </div>
   );

@@ -16,7 +16,7 @@ export default function Dropdown({ onSelect }: Props) {
   const handleSelect = (option: string) => {
     setSelected(option);
     setOpen(false);
-    onSelect(option); // 🔹 envoie la valeur sélectionnée pour trier
+    onSelect(option); // envoie la valeur sélectionnée pour trier
   };
 
   // On retire l’option déjà sélectionnée du menu
