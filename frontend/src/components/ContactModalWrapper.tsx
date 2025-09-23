@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import ContactModal from "./ContactModal";
 
@@ -10,6 +10,23 @@ type Props = {
 
 export default function ContactModalWrapper({ photographerName }: Props) {
   const [isOpen, setIsOpen] = useState(false);
+
+  // 🔹 Modifier le background et bloquer le scroll quand la modale est ouverte
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.backgroundColor = "#E4E4E4";
+      document.body.style.overflow = "hidden"; // empêche le scroll
+    } else {
+      document.body.style.backgroundColor = "";
+      document.body.style.overflow = "";
+    }
+
+    // nettoyage si le composant est démonté
+    return () => {
+      document.body.style.backgroundColor = "";
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
 
   return (
     <>
