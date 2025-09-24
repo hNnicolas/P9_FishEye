@@ -10,8 +10,24 @@ export const prisma = globalThis.prisma || new PrismaClient();
 if (process.env.NODE_ENV !== "production") globalThis.prisma = prisma;
 
 // ==========================
-// Fonctions utilitaires
+// Types et fonctions utilitaires
 // ==========================
+
+export type PhotographerWithPhotos = {
+  id: number;
+  name: string;
+  city: string;
+  country: string;
+  tagline: string;
+  price: number;
+  portrait: string;
+  photos?: {
+    id: number;
+    url: string;
+    title?: string;
+    likes?: number;
+  }[];
+};
 
 export const getAllPhotographers = () => prisma.photographer.findMany();
 
@@ -23,6 +39,12 @@ export const getPhotographer = (id: number) =>
 export const getAllMediasForPhotographer = (photographerId: number) =>
   prisma.media.findMany({
     where: { photographerId },
+  });
+
+// **Nouvelle fonction pour récupérer un média par son ID**
+export const getMediaById = (mediaId: number) =>
+  prisma.media.findUnique({
+    where: { id: mediaId },
   });
 
 export const updateNumberOfLikes = (

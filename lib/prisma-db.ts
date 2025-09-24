@@ -11,7 +11,7 @@ export const prisma =
   new PrismaClient({
     datasources: {
       db: {
-        url: process.env.DATABASE_URL, // Next.js charge automatiquement .env.local
+        url: process.env.DATABASE_URL,
       },
     },
   });

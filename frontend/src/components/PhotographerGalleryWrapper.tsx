@@ -21,18 +21,35 @@ export default function PhotographerGalleryWrapper({
   const [sortCriteria, setSortCriteria] = useState<string>("Popularité");
   const [totalLikesUpdated, setTotalLikesUpdated] = useState(totalLikes);
 
-  const handleLike = (id: number) => {
-    setMediaState((prev) => {
-      const newState = prev.map((m) =>
-        m.id === id ? { ...m, likes: m.likes + 1 } : m
-      );
-      // Recalcule du total des likes
-      const total = newState.reduce((sum, m) => sum + m.likes, 0);
-      setTotalLikesUpdated(total);
-      return newState;
-    });
+  // Fonction pour gérer le clic sur "like"
+  const handleLike = async (id: number) => {
+    try {
+      const res = await fetch(`/api/media/${id}/like`, { method: "POST" });
+      const data = await res.json();
+
+      if (data.success) {
+        // Met à jour le state local avec le nouveau nombre de likes
+        setMediaState((prev) => {
+          const newState = prev.map((m) =>
+            m.id === id ? { ...m, likes: data.likes } : m
+          );
+          // Recalcule du total des likes
+          const total = newState.reduce((sum, m) => sum + m.likes, 0);
+          setTotalLikesUpdated(total);
+          return newState;
+        });
+      } else {
+        console.error(
+          "Erreur lors de l'incrémentation des likes :",
+          data.message
+        );
+      }
+    } catch (err) {
+      console.error("Erreur réseau lors de l'incrémentation des likes :", err);
+    }
   };
 
+  // Tri dynamique selon le critère choisi
   useEffect(() => {
     let sorted = [...mediaState];
 
@@ -57,8 +74,8 @@ export default function PhotographerGalleryWrapper({
       <PhotographerGallery
         medias={sortedMedias}
         pricePerDay={pricePerDay}
-        totalLikes={totalLikesUpdated} // totalLikes dynamique
-        onLike={handleLike} // incrémente les likes
+        totalLikes={totalLikesUpdated}
+        onLike={handleLike}
       />
     </div>
   );

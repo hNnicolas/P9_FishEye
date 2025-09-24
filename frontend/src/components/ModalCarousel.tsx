@@ -44,7 +44,7 @@ export default function ModalCarousel({
   const media = medias[currentIndex];
 
   return (
-    <div className="fixed inset-0 bg-white bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-white bg-opacity-50 flex items-start justify-center z-50 p-4 pt-20">
       <div className="relative bg-white rounded-lg shadow-lg w-full max-w-[85vw] max-h-[90vh] flex flex-col items-center p-4">
         {/* Bouton de fermeture */}
         <button

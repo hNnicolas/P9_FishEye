@@ -98,12 +98,21 @@ export default function PhotographerGallery({
       )}
 
       {!isModalOpen && (
-        <div className="fixed bottom-4 right-0 flex items-center justify-between bg-[#DB8876] text-black px-4 py-3 rounded-lg shadow-lg z-50">
-          <div className="flex items-center gap-2">
+        <div className="fixed bottom-4 right-0 flex items-center bg-[#DB8876] text-black px-4 py-3 rounded-lg shadow-lg z-50">
+          {/* Bloc likes + icône */}
+          <div className="flex items-center gap-0">
             <span className="text-lg">{totalLikes}</span>
-            <Image src="/icons/likes.png" alt="likes" width={16} height={16} />
+            <Image
+              src="/icons/likes.png"
+              alt="likes"
+              width={16}
+              height={16}
+              className="invert-[0] brightness-0"
+            />
           </div>
-          <span className="text-lg">{pricePerDay}€/jour</span>
+
+          {/* Espacement avant le prix */}
+          <span className="ml-16 text-lg">{pricePerDay}€/jour</span>
         </div>
       )}
     </div>
