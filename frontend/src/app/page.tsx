@@ -1,12 +1,32 @@
-import PhotographerList from "@/components/PhotographerList";
-import { Photographer } from "../app/types/photographer";
-import photographers from "../../../data/photographer.json";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+import PhotographerList from "@/components/PhotographerList";
+import { getAllPhotographers } from "@/lib/prisma-db";
+import { Photographer } from "@/app/types/photographer";
 
-export default function HomePage() {
+export default async function HomePage() {
+  // Récupération des photographes depuis Prisma
+  const photographers = await getAllPhotographers();
+
+  const order = [
+    "Mimi Keel",
+    "Ellie-Rose Wilkens",
+    "Tracy Galindo",
+    "Nabeel Bradford",
+    "Rhode Dubois",
+    "Marcel Nikolic",
+  ];
+
+  const sortedPhotographers = photographers.sort((a, b) => {
+    const indexA = order.indexOf(a.name);
+    const indexB = order.indexOf(b.name);
+    // Si le nom n'est pas trouvé, placer à la fin
+    return (indexA === -1 ? 999 : indexA) - (indexB === -1 ? 999 : indexB);
+  });
+
   return (
     <main className="px-12 py-8">
+      {/* Header */}
       <header className="flex items-center">
         <div className="flex items-center gap-1">
           <Link href="/">
@@ -27,7 +47,8 @@ export default function HomePage() {
         </div>
       </header>
 
-      <PhotographerList photographers={photographers as Photographer[]} />
+      {/* Liste des photographes */}
+      <PhotographerList photographers={sortedPhotographers as Photographer[]} />
     </main>
   );
 }
