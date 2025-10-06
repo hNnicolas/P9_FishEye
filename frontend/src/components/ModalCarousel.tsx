@@ -44,10 +44,17 @@ export default function ModalCarousel({
   const media = medias[currentIndex];
 
   return (
-    <div className="fixed inset-0 bg-white bg-opacity-50 flex items-start justify-center z-50 p-4 pt-20">
+    <div
+      role="dialog"
+      aria-label="image closeup view"
+      aria-modal="true"
+      className="fixed inset-0 bg-white bg-opacity-50 flex items-start justify-center z-50 p-4 pt-20"
+    >
       <div className="relative bg-white rounded-lg shadow-lg w-full max-w-[85vw] max-h-[90vh] flex flex-col items-center p-4">
         {/* Bouton de fermeture */}
         <button
+          role="button"
+          aria-label="Close dialog"
           onClick={onClose}
           className="absolute top-2 right-2 w-8 h-8 z-50"
         >
@@ -63,6 +70,8 @@ export default function ModalCarousel({
           <div className="relative inline-block">
             {/* Flèche gauche */}
             <button
+              role="link"
+              aria-label="Previous image"
               onClick={() =>
                 setCurrentIndex(
                   (currentIndex - 1 + medias.length) % medias.length
@@ -90,12 +99,15 @@ export default function ModalCarousel({
               <video
                 controls
                 src={`/videos/${media.video}`}
+                aria-label={media.title}
                 className="rounded-[5px] object-contain max-h-[80vh] w-auto"
               />
             )}
 
             {/* Flèche droite */}
             <button
+              role="link"
+              aria-label="Next image"
               onClick={() =>
                 setCurrentIndex((currentIndex + 1) % medias.length)
               }
@@ -109,7 +121,10 @@ export default function ModalCarousel({
               />
             </button>
 
-            <p className="mt-2 text-lg text-[var(--color-primary)] text-left">
+            <p
+              role="text"
+              className="mt-2 text-lg text-[var(--color-primary)] text-left"
+            >
               {media.title}
             </p>
           </div>

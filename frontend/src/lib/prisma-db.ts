@@ -41,7 +41,7 @@ export const getAllMediasForPhotographer = (photographerId: number) =>
     where: { photographerId },
   });
 
-// **Nouvelle fonction pour récupérer un média par son ID**
+
 export const getMediaById = (mediaId: number) =>
   prisma.media.findUnique({
     where: { id: mediaId },
