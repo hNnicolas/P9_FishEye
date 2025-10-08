@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Media } from "../../types/media";
-import PhotographerGalleryWrapper from "./../../../components/PhotographerGalleryWrapper";
-import ContactModalWrapper from "./../../../components/ContactModalWrapper";
-import { getPhotographer, getAllMediasForPhotographer } from "@/lib/prisma-db";
+import PhotographerGalleryWrapper from "../../../components/PhotographerGalleryWrapper";
+import ContactModalWrapper from "../../../components/ContactModalWrapper";
+import { getPhotographerWithMedias } from "@/actions/photographer-actions";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -11,13 +11,14 @@ export default async function PhotographerPage({ params }: Props) {
   const resolvedParams = await params;
   const id = parseInt(resolvedParams.id, 10);
 
-  // utilisation de la fonction centralisée
-  const photographer = await getPhotographer(id);
-  if (!photographer)
+  // ✅ Appel via Server Action
+  const data = await getPhotographerWithMedias(id);
+
+  if (!data?.photographer)
     return <p className="text-center mt-10">Photographer not found</p>;
 
-  // idem pour les médias
-  const medias = await getAllMediasForPhotographer(id);
+  const { photographer, medias } = data;
+
   const mediasForGallery: Media[] = medias.map((m) => ({
     id: m.id,
     photographerId: m.photographerId,
