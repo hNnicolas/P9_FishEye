@@ -58,25 +58,24 @@ export default async function PhotographerPage({ params }: Props) {
         aria-labelledby={`photographer-${photographer.id}-title`}
         tabIndex={0}
       >
-        <div className="text-center md:text-left">
+        <div
+          className="text-center md:text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] rounded p-2"
+          role="group"
+          aria-labelledby={`photographer-${photographer.id}-title`}
+          tabIndex={0}
+        >
           <h1
             id={`photographer-${photographer.id}-title`}
-            className="text-5xl text-[var(--color-title)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] rounded"
-            tabIndex={0}
+            className="text-5xl text-[var(--color-title)]"
           >
             {photographer.name}
           </h1>
 
-          <p
-            className="text-[20px] text-[var(--color-primary)] mt-3"
-            tabIndex={0}
-          >
+          <p className="text-[20px] text-[var(--color-primary)] mt-3">
             {photographer.city}, {photographer.country}
           </p>
 
-          <p className="mt-4 text-gray-600" tabIndex={0}>
-            {photographer.tagline}
-          </p>
+          <p className="mt-4 text-gray-600">{photographer.tagline}</p>
         </div>
 
         {/* Bouton ou modale de contact */}
