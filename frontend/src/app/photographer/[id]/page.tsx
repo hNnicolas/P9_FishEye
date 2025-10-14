@@ -33,11 +33,18 @@ export default async function PhotographerPage({ params }: Props) {
 
   return (
     <main className="max-w-6xl mx-auto p-4">
-      <header className="flex items-center justify-between py-4 mb-8">
-        <Link href="/">
+      <header
+        className="flex items-center justify-between py-4 mb-8"
+        role="banner"
+      >
+        <Link
+          href="/"
+          className="focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] rounded"
+          aria-label="Retour à la page d’accueil"
+        >
           <Image
             src="/logo.png"
-            alt="Fisheye Logo"
+            alt="Fisheye Homepage"
             width={150}
             height={50}
             priority
@@ -45,23 +52,45 @@ export default async function PhotographerPage({ params }: Props) {
         </Link>
       </header>
 
-      <section className="flex flex-col md:flex-row items-center justify-between bg-[#FAFAFA] p-6 rounded-lg mb-8 h-[230px] md:h-auto">
+      <section
+        className="flex flex-col md:flex-row items-center justify-between bg-[#FAFAFA] p-6 rounded-lg mb-8 h-[230px] md:h-auto"
+        role="region"
+        aria-labelledby={`photographer-${photographer.id}-title`}
+        tabIndex={0}
+      >
         <div className="text-center md:text-left">
-          <h1 className="text-5xl text-[var(--color-title)]">
+          <h1
+            id={`photographer-${photographer.id}-title`}
+            className="text-5xl text-[var(--color-title)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] rounded"
+            tabIndex={0}
+          >
             {photographer.name}
           </h1>
-          <p className="text-[20px] text-[var(--color-primary)] mt-3">
+
+          <p
+            className="text-[20px] text-[var(--color-primary)] mt-3"
+            tabIndex={0}
+          >
             {photographer.city}, {photographer.country}
           </p>
-          <p className="mt-4 text-gray-600">{photographer.tagline}</p>
+
+          <p className="mt-4 text-gray-600" tabIndex={0}>
+            {photographer.tagline}
+          </p>
         </div>
 
+        {/* Bouton ou modale de contact */}
         <ContactModalWrapper photographerName={photographer.name} />
 
-        <div className="relative w-36 h-36">
+        {/* Photo du photographe */}
+        <div
+          className="relative w-36 h-36 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] rounded-full"
+          tabIndex={0}
+          aria-label={`Portrait de ${photographer.name}`}
+        >
           <Image
             src={`/images/${photographer.portrait}`}
-            alt={photographer.name}
+            alt={`Portrait de ${photographer.name}`}
             fill
             className="rounded-full object-cover -ml-[8px]"
             priority

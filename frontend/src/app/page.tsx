@@ -27,12 +27,16 @@ export default async function HomePage() {
   return (
     <main className="px-12 py-8">
       {/* Header */}
-      <header className="flex items-center">
+      <header className="flex items-center" role="banner">
         <div className="flex items-center gap-1">
-          <Link href="/">
+          <Link
+            href="/"
+            className="focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] rounded"
+            aria-label="Retour à la page d’accueil"
+          >
             <Image
               src="/logo.png"
-              alt="Fisheye Homepage"
+              alt="Logo de Fisheye, retour à la page d’accueil"
               width={200}
               height={60}
               priority
@@ -40,8 +44,12 @@ export default async function HomePage() {
             />
           </Link>
         </div>
+
         <div className="flex items-center gap-2 ml-auto relative left-[-120px]">
-          <h2 className="text-[28px] text-[var(--color-primary)] mr-[45px]">
+          <h2
+            className="text-[28px] text-[var(--color-primary)] mr-[45px]"
+            tabIndex={0}
+          >
             Nos photographes
           </h2>
         </div>
