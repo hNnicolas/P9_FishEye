@@ -66,19 +66,28 @@ export default async function PhotographerPage({ params }: Props) {
         >
           <h1
             id={`photographer-${photographer.id}-title`}
-            className="text-5xl text-[var(--color-title)]"
+            className="text-5xl text-[var(--color-title)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] rounded"
+            tabIndex={0}
           >
             {photographer.name}
           </h1>
 
-          <p className="text-[20px] text-[var(--color-primary)] mt-3">
+          <p
+            className="text-[20px] text-[var(--color-primary)] mt-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] rounded"
+            tabIndex={0}
+          >
             {photographer.city}, {photographer.country}
           </p>
 
-          <p className="mt-4 text-gray-600">{photographer.tagline}</p>
+          <p
+            className="mt-4 text-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] rounded"
+            tabIndex={0}
+          >
+            {photographer.tagline}
+          </p>
         </div>
 
-        {/* Bouton ou modale de contact */}
+        {/* modale de contact */}
         <ContactModalWrapper photographerName={photographer.name} />
 
         {/* Photo du photographe */}

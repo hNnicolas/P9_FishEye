@@ -57,7 +57,7 @@ export default function PhotographerGallery({
               }
             }}
           >
-            <div className="relative w-full aspect-[4/3]">
+            <div className="relative w-full aspect-[4/3]" tabIndex={0}>
               {media.image ? (
                 <Image
                   src={`/images/${media.image}`}
@@ -135,7 +135,6 @@ export default function PhotographerGallery({
             />
           </div>
 
-          {/* Espacement avant le prix */}
           <span className="ml-16 text-lg">{pricePerDay}€/jour</span>
         </div>
       )}
