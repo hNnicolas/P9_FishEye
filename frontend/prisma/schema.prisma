@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")  
+}
+
+model Photographer {
+  id       Int     @id @default(autoincrement())
+  name     String
+  city     String
+  country  String
+  tagline  String
+  price    Int
+  portrait String
+  medias   Media[]
+}
+
+model Media {
+  id             Int          @id @default(autoincrement())
+  photographerId Int
+  title          String
+  image          String?
+  video          String?
+  likes          Int
+  date           String
+  price          Int
+  photographer   Photographer @relation(fields: [photographerId], references: [id])
+}
