@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import Image from "next/image";
 
 type Media = {
@@ -11,8 +11,8 @@ type Media = {
 };
 
 type Props = {
-  medias: Media[]; // médias triés pour l'affichage dans la modale
-  originalMedias: Media[]; // médias originaux pour gérer correctement les likes
+  medias: Media[];
+  originalMedias: Media[];
   currentIndex: number;
   onClose: () => void;
   setCurrentIndex: (index: number) => void;
@@ -26,20 +26,23 @@ export default function ModalCarousel({
   onClose,
   setCurrentIndex,
 }: Props) {
-  const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.key === "ArrowRight") {
-      setCurrentIndex((currentIndex + 1) % medias.length);
-    } else if (e.key === "ArrowLeft") {
-      setCurrentIndex((currentIndex - 1 + medias.length) % medias.length);
-    } else if (e.key === "Escape") {
-      onClose();
-    }
-  };
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight") {
+        setCurrentIndex((currentIndex + 1) % medias.length);
+      } else if (e.key === "ArrowLeft") {
+        setCurrentIndex((currentIndex - 1 + medias.length) % medias.length);
+      } else if (e.key === "Escape") {
+        onClose();
+      }
+    },
+    [currentIndex, medias.length, onClose, setCurrentIndex]
+  );
 
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [currentIndex]);
+  }, [handleKeyDown]);
 
   const media = medias[currentIndex];
 
@@ -51,7 +54,6 @@ export default function ModalCarousel({
       className="fixed inset-0 bg-white bg-opacity-50 flex items-start justify-center z-50 p-4 pt-20"
     >
       <div className="relative bg-white rounded-lg shadow-lg w-full max-w-[85vw] max-h-[90vh] flex flex-col items-center p-4">
-        {/* Bouton de fermeture */}
         <button
           role="button"
           aria-label="Close dialog"
@@ -68,7 +70,6 @@ export default function ModalCarousel({
 
         <div className="flex flex-col items-center w-full">
           <div className="relative inline-block">
-            {/* Flèche gauche */}
             <button
               role="link"
               aria-label="Previous image"
@@ -104,7 +105,6 @@ export default function ModalCarousel({
               />
             )}
 
-            {/* Flèche droite */}
             <button
               role="link"
               aria-label="Next image"
@@ -121,10 +121,7 @@ export default function ModalCarousel({
               />
             </button>
 
-            <p
-              role="text"
-              className="mt-2 text-lg text-[var(--color-primary)] text-left"
-            >
+            <p className="mt-2 text-lg text-[var(--color-primary)] text-left">
               {media.title}
             </p>
           </div>
