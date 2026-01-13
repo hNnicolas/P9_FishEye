@@ -6,7 +6,7 @@ import { Photographer } from "@/app/types/photographer";
 
 export default async function HomePage() {
   // Récupération des photographes depuis Prisma
-  const photographers = await getAllPhotographers();
+  const photographers: Photographer[] = await getAllPhotographers();
 
   const order = [
     "Mimi Keel",
