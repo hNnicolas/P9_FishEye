@@ -4,6 +4,7 @@ import Image from "next/image";
 
 type Props = {
   photographer: Photographer;
+  isFirst: boolean;
 };
 
 export default function CardPhotographer({ photographer }: Props) {
