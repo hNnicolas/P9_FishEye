@@ -21,15 +21,13 @@ export default function PhotographerGalleryWrapper({
   const [sortedMedias, setSortedMedias] = useState<Media[]>([...medias]);
   const [sortCriteria, setSortCriteria] = useState<string>("Popularité");
   const [totalLikesUpdated, setTotalLikesUpdated] = useState(totalLikes);
-  const [isPending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
 
-  // Fonction pour gérer le clic sur "like" d'un média (server action)
   const handleLike = (id: number) => {
     startTransition(async () => {
       try {
         const newLikes = await incrementMediaLike(id);
 
-        // Mise à jour optimiste côté client
         setMediaState((prev) => {
           const newState = prev.map((m) =>
             m.id === id ? { ...m, likes: newLikes } : m
@@ -44,9 +42,8 @@ export default function PhotographerGalleryWrapper({
     });
   };
 
-  // Effet pour trier les médias selon le critère sélectionné
   useEffect(() => {
-    let sorted = [...mediaState];
+    const sorted = [...mediaState];
 
     if (sortCriteria === "Popularité") {
       sorted.sort((a, b) => b.likes - a.likes);
