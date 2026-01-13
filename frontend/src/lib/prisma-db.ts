@@ -1,13 +1,22 @@
-import { PrismaClient } from "../../../generated/prisma/client";
+import { PrismaClient } from "@prisma/client";
 
 declare global {
-  // Évite la recréation du client en mode dev
   var prisma: PrismaClient | undefined;
 }
 
-export const prisma = globalThis.prisma || new PrismaClient();
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined;
+};
 
-if (process.env.NODE_ENV !== "production") globalThis.prisma = prisma;
+export const prisma =
+  globalForPrisma.prisma ??
+  new PrismaClient({
+    log: ["error", "warn"],
+  });
+
+if (process.env.NODE_ENV !== "production") {
+  globalForPrisma.prisma = prisma;
+}
 
 // ==========================
 // Types et fonctions utilitaires
@@ -40,7 +49,6 @@ export const getAllMediasForPhotographer = (photographerId: number) =>
   prisma.media.findMany({
     where: { photographerId },
   });
-
 
 export const getMediaById = (mediaId: number) =>
   prisma.media.findUnique({

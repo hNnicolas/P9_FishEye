@@ -36,7 +36,7 @@ export default async function HomePage() {
           >
             <Image
               src="/logo.png"
-              alt="Logo de Fisheye, retour à la page d’accueil"
+              alt="Fisheye Homepage"
               width={200}
               height={60}
               priority
