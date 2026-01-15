@@ -11,7 +11,6 @@ export default async function PhotographerPage({ params }: Props) {
   const resolvedParams = await params;
   const id = parseInt(resolvedParams.id, 10);
 
-  // ✅ Appel via Server Action
   const data = await getPhotographerWithMedias(id);
 
   if (!data?.photographer)
@@ -87,10 +86,8 @@ export default async function PhotographerPage({ params }: Props) {
           </p>
         </div>
 
-        {/* modale de contact */}
         <ContactModalWrapper photographerName={photographer.name} />
 
-        {/* Photo du photographe */}
         <div
           className="relative w-36 h-36 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] rounded-full"
           tabIndex={0}

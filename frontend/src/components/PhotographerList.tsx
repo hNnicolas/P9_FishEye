@@ -1,3 +1,5 @@
+"use client";
+
 import { Photographer } from "../app/types/photographer";
 import CardPhotographer from "./CardPhotographer";
 

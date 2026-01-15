@@ -1,4 +1,6 @@
-import { Photographer } from "../app/types/photographer";
+"use client";
+
+import { Photographer } from "@/app/types/photographer";
 import Link from "next/link";
 import Image from "next/image";
 
